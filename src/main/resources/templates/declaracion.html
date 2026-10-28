@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Declaración</title>
+	<style>
+		.requiere-revision { background-color: #fff3cd; }
+	</style>
+</head>
+<body>
+	<p><a th:href="@{/}">Volver a declaraciones</a></p>
+	<h1>Declaración <span th:text="${declaracion.id}"></span></h1>
+	<p>Estado: <strong th:text="${declaracion.estado}"></strong></p>
+
+	<section>
+		<h2>Documentos de soporte</h2>
+		<ul>
+			<li th:each="documento : ${declaracion.documentos}">
+				<span th:text="${documento.tipo}"></span>:
+				<span th:text="${documento.archivo}"></span>
+			</li>
+		</ul>
+	</section>
+
+	<div th:if="${camposPendientes != null}">
+		<h2>Hay campos pendientes de revisión</h2>
+		<ul>
+			<li th:each="campo : ${camposPendientes}" th:text="${campo.nombre}"></li>
+		</ul>
+	</div>
+
+	<section>
+		<h2>Campos de la declaración</h2>
+		<table>
+			<thead>
+				<tr>
+					<th>Nombre</th><th>Valor</th><th>Documento de origen</th>
+					<th>Nivel de confianza</th><th>Estado</th><th>Corregir / aceptar</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="campo : ${declaracion.campos}"
+					th:classappend="${campo.requiereRevision()} ? 'requiere-revision' : ''">
+					<td th:text="${campo.nombre}"></td>
+					<td th:text="${campo.valor}"></td>
+					<td th:text="${campo.origen != null ? campo.origen.archivo : 'Sin documento'}"></td>
+					<td th:text="${campo.nivelConfianza != null ? campo.nivelConfianza : 'No disponible'}"></td>
+					<td th:text="${campo.estado}"></td>
+					<td>
+						<form th:action="@{/declaraciones/{declaracionId}/campos/{campoId}(declaracionId=${declaracion.id},campoId=${campo.id})}"
+							method="post">
+							<label>
+								Valor
+								<input type="text" name="valor" th:value="${campo.valor}">
+							</label>
+							<button type="submit">Corregir / aceptar</button>
+						</form>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</section>
+
+	<form th:action="@{/declaraciones/{id}/validar(id=${declaracion.id})}" method="post">
+		<button type="submit">Validar</button>
+	</form>
+</body>
+</html>

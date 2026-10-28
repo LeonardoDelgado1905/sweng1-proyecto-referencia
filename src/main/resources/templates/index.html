@@ -7,5 +7,18 @@
 </head>
 <body>
 	<h1 th:text="${titulo}">Importadora de calzado</h1>
+	<h2>Declaraciones</h2>
+	<table>
+		<thead>
+			<tr><th>ID</th><th>Estado</th><th>Detalle</th></tr>
+		</thead>
+		<tbody>
+			<tr th:each="declaracion : ${declaraciones}">
+				<td th:text="${declaracion.id}"></td>
+				<td th:text="${declaracion.estado}"></td>
+				<td><a th:href="@{/declaraciones/{id}(id=${declaracion.id})}">Ver declaración</a></td>
+			</tr>
+		</tbody>
+	</table>
 </body>
 </html>
