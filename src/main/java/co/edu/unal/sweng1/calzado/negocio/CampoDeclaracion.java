@@ -63,6 +63,9 @@ public class CampoDeclaracion {
 	}
 
 	public void corregir(String valor) {
+		if (valor == null || valor.trim().isEmpty()) {
+			throw new CorreccionVaciaException();
+		}
 		this.valor = valor;
 		this.revisado = true;
 	}
