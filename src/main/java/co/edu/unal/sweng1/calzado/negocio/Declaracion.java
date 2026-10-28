@@ -70,6 +70,10 @@ public class Declaracion {
 		return id;
 	}
 
+	void asignarId(Long id) {
+		this.id = id;
+	}
+
 	public EstadoDeclaracion getEstado() {
 		return estado;
 	}

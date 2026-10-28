@@ -48,6 +48,10 @@ public class DocumentoSoporte {
 		return id;
 	}
 
+	void asignarId(Long id) {
+		this.id = id;
+	}
+
 	public Declaracion getDeclaracion() {
 		return declaracion;
 	}
