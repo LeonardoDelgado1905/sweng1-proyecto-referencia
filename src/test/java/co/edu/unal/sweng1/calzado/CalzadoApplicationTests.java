@@ -40,6 +40,11 @@ class CalzadoApplicationTests {
 				.andExpect(view().name("declaracion"))
 				.andExpect(content().string(containsString("Hay campos pendientes de revisión")));
 
+		mockMvc.perform(post("/declaraciones/1/campos/6").param("valor", ""))
+				.andExpect(status().isOk())
+				.andExpect(view().name("declaracion"))
+				.andExpect(content().string(containsString("El valor no puede estar vacío")));
+		
 		mockMvc.perform(post("/declaraciones/1/campos/4").param("valor", "120 kg"))
 				.andExpect(status().is3xxRedirection())
 				.andExpect(redirectedUrl("/declaraciones/1"));

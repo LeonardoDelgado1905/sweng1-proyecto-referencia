@@ -40,6 +40,7 @@
 				</tr>
 			</thead>
 			<tbody>
+				<p th:if="${error != null}" th:text="${error}" class="text-danger"></p>
 				<tr th:each="campo : ${declaracion.campos}"
 					th:classappend="${campo.requiereRevision()} ? 'requiere-revision' : ''">
 					<td th:text="${campo.nombre}"></td>

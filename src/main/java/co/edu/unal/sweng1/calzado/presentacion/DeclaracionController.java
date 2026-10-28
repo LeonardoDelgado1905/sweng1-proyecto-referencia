@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import co.edu.unal.sweng1.calzado.negocio.Declaracion;
 import co.edu.unal.sweng1.calzado.negocio.DeclaracionNoValidableException;
+import co.edu.unal.sweng1.calzado.negocio.CorreccionVaciaException;
 import co.edu.unal.sweng1.calzado.negocio.DeclaracionService;
 
 @Controller
@@ -30,8 +31,17 @@ public class DeclaracionController {
 	public String corregirCampo(
 			@PathVariable Long declaracionId,
 			@PathVariable Long campoId,
-			@RequestParam String valor) {
-		declaracionService.corregirCampo(declaracionId, campoId, valor);
+			@RequestParam String valor,
+			Model model) {
+
+		try{
+			declaracionService.corregirCampo(declaracionId, campoId, valor);
+		} catch (CorreccionVaciaException exception) {
+			model.addAttribute(	"error", "El valor no puede estar vacío");
+			cargarDeclaracion(declaracionId, model);
+			return "declaracion";
+		}
+
 		return "redirect:/declaraciones/" + declaracionId;
 	}
 

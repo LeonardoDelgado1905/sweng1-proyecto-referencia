@@ -40,7 +40,7 @@ INSERT INTO campo_declaracion (id, declaracion_id, origen_id, nombre, valor, niv
 SELECT 5, 1, 3, 'Subpartida', '6403999000', 0.55, 'BAJA_CONFIANZA', FALSE
 WHERE NOT EXISTS (SELECT 1 FROM campo_declaracion WHERE id = 5);
 INSERT INTO campo_declaracion (id, declaracion_id, origen_id, nombre, valor, nivel_confianza, estado, revisado)
-SELECT 6, 1, NULL, 'Seguro', '', NULL, 'CAPTURA_MANUAL', FALSE
+SELECT 6, 1, NULL, 'Seguro', '', NULL, 'VACIO', FALSE
 WHERE NOT EXISTS (SELECT 1 FROM campo_declaracion WHERE id = 6);
 
 INSERT INTO campo_declaracion (id, declaracion_id, origen_id, nombre, valor, nivel_confianza, estado, revisado)
