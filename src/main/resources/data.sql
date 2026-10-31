@@ -58,3 +58,16 @@ WHERE NOT EXISTS (SELECT 1 FROM campo_declaracion WHERE id = 10);
 INSERT INTO campo_declaracion (id, declaracion_id, origen_id, nombre, valor, nivel_confianza, estado, revisado)
 SELECT 11, 2, 6, 'Subpartida', '6403999000', 0.96, 'CONFIABLE', FALSE
 WHERE NOT EXISTS (SELECT 1 FROM campo_declaracion WHERE id = 11);
+
+INSERT INTO campo_declaracion (id, declaracion_id, origen_id, nombre, valor, nivel_confianza, estado, revisado)
+SELECT 12, 1, NULL, 'Gravamen (%)', '10', 1.00, 'CONFIABLE', FALSE
+WHERE NOT EXISTS (SELECT 1 FROM campo_declaracion WHERE id = 12);
+INSERT INTO campo_declaracion (id, declaracion_id, origen_id, nombre, valor, nivel_confianza, estado, revisado)
+SELECT 13, 1, NULL, 'IVA (%)', '19', 1.00, 'CONFIABLE', FALSE
+WHERE NOT EXISTS (SELECT 1 FROM campo_declaracion WHERE id = 13);
+INSERT INTO campo_declaracion (id, declaracion_id, origen_id, nombre, valor, nivel_confianza, estado, revisado)
+SELECT 14, 2, NULL, 'Gravamen (%)', '10', 1.00, 'CONFIABLE', FALSE
+WHERE NOT EXISTS (SELECT 1 FROM campo_declaracion WHERE id = 14);
+INSERT INTO campo_declaracion (id, declaracion_id, origen_id, nombre, valor, nivel_confianza, estado, revisado)
+SELECT 15, 2, NULL, 'IVA (%)', '19', 1.00, 'CONFIABLE', FALSE
+WHERE NOT EXISTS (SELECT 1 FROM campo_declaracion WHERE id = 15);

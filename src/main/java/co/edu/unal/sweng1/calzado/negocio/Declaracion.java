@@ -66,6 +66,23 @@ public class Declaracion {
 		estado = EstadoDeclaracion.VALIDADA;
 	}
 
+	public String valorDeCampo(String nombre) {
+		return campos.stream()
+				.filter(campo -> campo.getNombre().equals(nombre))
+				.map(CampoDeclaracion::getValor)
+				.findFirst()
+				.orElse(null);
+	}
+
+	public ValoresDerivados calcularValoresDerivados() {
+		return new CalculadoraValoresDerivados().calcular(
+				valorDeCampo(CalculadoraValoresDerivados.FOB),
+				valorDeCampo(CalculadoraValoresDerivados.FLETE),
+				valorDeCampo(CalculadoraValoresDerivados.SEGURO),
+				valorDeCampo(CalculadoraValoresDerivados.GRAVAMEN_PORCENTAJE),
+				valorDeCampo(CalculadoraValoresDerivados.IVA_PORCENTAJE));
+	}
+
 	public Long getId() {
 		return id;
 	}
