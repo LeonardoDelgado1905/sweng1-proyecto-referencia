@@ -17,8 +17,14 @@ nombres pendientes. Cuando todos están revisados o son confiables, la
 declaración cambia a estado `VALIDADA`.
 
 No forman parte de este proyecto la creación de declaraciones, la carga de
-documentos, la extracción automática de información u OCR, el cálculo de CIF y
-tributos, ni la generación de un PDF.
+documentos, la extracción automática de información u OCR, ni la generación
+de un PDF.
+
+La vista de detalle muestra una sección «Valores calculados» con CIF
+(FOB + flete + seguro), gravamen, IVA y total a pagar. Se recalculan en cada
+consulta a partir de los campos `Valor FOB`, `Flete`, `Seguro`, `Gravamen (%)`
+e `IVA (%)`, con `BigDecimal` y redondeo a 2 decimales `HALF_UP`; no se
+guardan. Si falta un dato base o no es numérico, la vista indica cuál.
 
 ## Tecnologías
 
@@ -93,8 +99,11 @@ Las pruebas comprueban:
   interfaz de repositorio basada en un `Map`, sin librerías de mocking.
 - El repositorio JPA contra H2 en memoria, incluida la lectura de las
   declaraciones de ejemplo insertadas por `data.sql`.
+- La calculadora de valores derivados: el caso FOB 2500, flete 350, seguro 50,
+  gravamen 10 e IVA 19, el redondeo y los datos base faltantes o no numéricos.
 - La interacción web para listar una declaración, advertir sobre campos
-  pendientes, corregir campos y completar la validación.
+  pendientes, corregir campos, completar la validación y ver el CIF recalculado al capturar
+  el seguro.
 
 La configuración de pruebas está en
 `src/test/resources/application.properties` y usa una base H2 en memoria; no
@@ -116,13 +125,13 @@ existentes ni sobrescribe cambios guardados.
 Las dos declaraciones de ejemplo son:
 
 1. **Declaración 1**, en estado `BORRADOR`, con tres documentos: factura,
-   documento de transporte y lista de empaque. Incluye seis campos: NIT del
+   documento de transporte y lista de empaque. Incluye ocho campos: NIT del
    proveedor, valor FOB, flete, peso bruto con conflicto, subpartida con baja
-   confianza y seguro vacío para captura manual. Los campos pendientes deben
+   confianza, seguro vacío para captura manual, gravamen (10 %) e IVA (19 %). Los campos pendientes deben
    corregirse o aceptarse explícitamente antes de validar.
 2. **Declaración 2**, en estado `BORRADOR`, con los mismos tres tipos de
-   documentos y cinco campos confiables: NIT del proveedor, valor FOB, flete,
-   peso bruto y subpartida. Está lista para validar.
+   documentos y siete campos confiables: NIT del proveedor, valor FOB, flete,
+   peso bruto, subpartida, gravamen (10 %) e IVA (19 %). Está lista para validar.
 
 La consola H2 está habilitada en la ruta `/h2-console`. Cuando el puerto 8080
 esté reenviado, ábrela en el mismo host de la aplicación con la ruta
@@ -151,7 +160,7 @@ organizan en estos paquetes:
 | Paquete | Clases principales | Responsabilidad |
 |---|---|---|
 | `presentacion` | `HomeController`, `DeclaracionController` | Recibir solicitudes web, preparar los datos de las vistas y coordinar las acciones de consulta, corrección y validación. |
-| `negocio` | `Declaracion`, `CampoDeclaracion`, `DocumentoSoporte`, `DeclaracionService`, `EstadoDeclaracion`, `EstadoCampo`, `TipoDocumento` y excepciones de negocio | Representar las entidades y reglas de negocio. El servicio coordina las operaciones y las entidades deciden si se puede validar una declaración. |
+| `negocio` | `Declaracion`, `CampoDeclaracion`, `DocumentoSoporte`, `CalculadoraValoresDerivados`, `DeclaracionService`, `EstadoDeclaracion`, `EstadoCampo`, `TipoDocumento` y excepciones de negocio | Representar las entidades y reglas de negocio. El servicio coordina las operaciones y las entidades deciden si se puede validar una declaración. |
 | `persistencia` | `DeclaracionRepository`, `DeclaracionRepositoryJpa` | Definir las operaciones de persistencia e implementarlas con `EntityManager` de JPA. |
 
 Las plantillas Thymeleaf están en `src/main/resources/templates`; el esquema,

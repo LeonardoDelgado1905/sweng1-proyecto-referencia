@@ -62,6 +62,44 @@
 		</table>
 	</section>
 
+	<section>
+		<h2>Valores calculados</h2>
+		<table>
+			<tr>
+				<th>CIF</th>
+				<td th:if="${valores.cif.calculado()}" th:text="${valores.cif.valor}"></td>
+				<td th:unless="${valores.cif.calculado()}">
+					No calculado. Falta o no es numérico:
+					<span th:text="${#strings.listJoin(valores.cif.datosFaltantes, ', ')}"></span>
+				</td>
+			</tr>
+			<tr>
+				<th>Gravamen</th>
+				<td th:if="${valores.gravamen.calculado()}" th:text="${valores.gravamen.valor}"></td>
+				<td th:unless="${valores.gravamen.calculado()}">
+					No calculado. Falta o no es numérico:
+					<span th:text="${#strings.listJoin(valores.gravamen.datosFaltantes, ', ')}"></span>
+				</td>
+			</tr>
+			<tr>
+				<th>IVA</th>
+				<td th:if="${valores.iva.calculado()}" th:text="${valores.iva.valor}"></td>
+				<td th:unless="${valores.iva.calculado()}">
+					No calculado. Falta o no es numérico:
+					<span th:text="${#strings.listJoin(valores.iva.datosFaltantes, ', ')}"></span>
+				</td>
+			</tr>
+			<tr>
+				<th>Total a pagar</th>
+				<td th:if="${valores.totalAPagar.calculado()}" th:text="${valores.totalAPagar.valor}"></td>
+				<td th:unless="${valores.totalAPagar.calculado()}">
+					No calculado. Falta o no es numérico:
+					<span th:text="${#strings.listJoin(valores.totalAPagar.datosFaltantes, ', ')}"></span>
+				</td>
+			</tr>
+		</table>
+	</section>
+
 	<form th:action="@{/declaraciones/{id}/validar(id=${declaracion.id})}" method="post">
 		<button type="submit">Validar</button>
 	</form>

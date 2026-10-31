@@ -21,7 +21,7 @@ class DeclaracionRepositoryJpaTest {
 
 		assertEquals(2, declaraciones.size());
 		assertEquals(3, declaraciones.getFirst().getDocumentos().size());
-		assertEquals(6, declaraciones.getFirst().getCampos().size());
+		assertEquals(8, declaraciones.getFirst().getCampos().size());
 		assertFalse(declaraciones.getFirst().getCampos().getFirst().requiereRevision());
 	}
 }

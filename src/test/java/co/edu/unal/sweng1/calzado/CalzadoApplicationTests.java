@@ -55,4 +55,19 @@ class CalzadoApplicationTests {
 				.andExpect(status().isOk())
 				.andExpect(content().string(containsString("VALIDADA")));
 	}
+
+	@Test
+	void muestraElCifRecalculadoAlCapturarElSeguro() throws Exception {
+		mockMvc.perform(get("/declaraciones/1"))
+				.andExpect(content().string(containsString("Valores calculados")))
+				.andExpect(content().string(containsString("Seguro")));
+
+		mockMvc.perform(post("/declaraciones/1/campos/6").param("valor", "50.00"))
+				.andExpect(status().is3xxRedirection());
+
+		mockMvc.perform(get("/declaraciones/1"))
+				.andExpect(status().isOk())
+				.andExpect(content().string(containsString("2900.00")))
+				.andExpect(content().string(containsString("896.10")));
+	}
 }

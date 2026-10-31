@@ -50,6 +50,7 @@ public class DeclaracionController {
 	private void cargarDeclaracion(Long id, Model model) {
 		Declaracion declaracion = declaracionService.buscar(id);
 		model.addAttribute("declaracion", declaracion);
+		model.addAttribute("valores", declaracion.calcularValoresDerivados());
 		model.addAttribute("camposPendientes", null);
 	}
 }
