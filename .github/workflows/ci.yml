@@ -23,5 +23,5 @@ jobs:
           cache: maven
       - name: Ensure Maven Wrapper is executable
         run: chmod +x mvnw
-      - name: Run tests
-        run: ./mvnw -B test
+      - name: Verify tests and coverage
+        run: ./mvnw -B verify
