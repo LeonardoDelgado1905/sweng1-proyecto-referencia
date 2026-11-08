@@ -111,11 +111,15 @@ usa el archivo de datos de desarrollo.
 
 ### Reporte de cobertura
 
-Para ejecutar las pruebas y generar el reporte HTML de cobertura:
+Para ejecutar las pruebas, verificar la cobertura y generar el reporte HTML:
 
 ```bash
-./mvnw verify
+./mvnw -B verify
 ```
+
+CI ejecuta el mismo comando y exige una cobertura global mínima del 91 % de
+instrucciones y del 89 % de ramas. Estos umbrales solo se pueden elevar, nunca
+bajar.
 
 El reporte queda en `target/site/jacoco/index.html`. En un Codespace, puedes
 servir la carpeta desde la raíz del proyecto con el servidor incluido en el
