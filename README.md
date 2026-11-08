@@ -134,6 +134,37 @@ Después, abre el puerto 8000 desde la pestaña **Ports**. También puedes
 descargar la carpeta `target/site/jacoco` desde el explorador de VS Code y
 abrir `index.html` en el navegador local.
 
+### Pruebas de mutación
+
+Para analizar únicamente las clases y pruebas del paquete `negocio`, ejecuta:
+
+```bash
+./mvnw test-compile org.pitest:pitest-maven:mutationCoverage
+```
+
+PIT se ejecuta solo con este comando, no con `test` ni con `verify`. El reporte
+HTML queda en `target/pit-reports/index.html`. En un Codespace, sirve la carpeta
+con el JDK 21 y abre el puerto 8000 desde **Ports**:
+
+```bash
+cd target/pit-reports
+jwebserver --bind 0.0.0.0 --port 8000
+```
+
+También puedes descargar `target/pit-reports` y abrir `index.html` localmente.
+
+PIT modifica pequeñas partes del código: un mutante **eliminado** (*killed*)
+causa el fallo de una prueba; uno **sobreviviente** (*survived*) se ejecuta sin
+que las pruebas detecten el cambio. La cobertura de líneas indica qué código
+se ejecutó, mientras que el puntaje de mutación indica la proporción de
+mutantes eliminados. Por eso, ejecutar una línea no garantiza que sus
+resultados estén suficientemente comprobados.
+
+Por ejemplo, el reporte generado muestra como sobreviviente el mutante de
+`Declaracion.agregarCampo` que elimina la llamada `campo.asociarA(this)`.
+Una aserción que compruebe que `campo.getDeclaracion()` es la misma declaración
+después de agregarlo detectaría ese cambio.
+
 ## Base de datos y consola H2
 
 Al ejecutar la aplicación, H2 guarda la base de datos en el archivo cuyo
