@@ -109,6 +109,27 @@ La configuración de pruebas está en
 `src/test/resources/application.properties` y usa una base H2 en memoria; no
 usa el archivo de datos de desarrollo.
 
+### Reporte de cobertura
+
+Para ejecutar las pruebas y generar el reporte HTML de cobertura:
+
+```bash
+./mvnw verify
+```
+
+El reporte queda en `target/site/jacoco/index.html`. En un Codespace, puedes
+servir la carpeta desde la raíz del proyecto con el servidor incluido en el
+JDK 21:
+
+```bash
+cd target/site/jacoco
+jwebserver --bind 0.0.0.0 --port 8000
+```
+
+Después, abre el puerto 8000 desde la pestaña **Ports**. También puedes
+descargar la carpeta `target/site/jacoco` desde el explorador de VS Code y
+abrir `index.html` en el navegador local.
+
 ## Base de datos y consola H2
 
 Al ejecutar la aplicación, H2 guarda la base de datos en el archivo cuyo
